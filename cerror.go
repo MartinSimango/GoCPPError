@@ -4,9 +4,8 @@ import (
 	"unsafe"
 )
 
-// #cgo CFLAGS:  -I${SRCDIR}/../../FileClient/include -I../../FilePacket/include -I../../Error/include
-// #cgo LDFLAGS: -L${SRCDIR}/../../Error/lib -lgoerror
-// #include "ErrorWrapper.h"
+// #cgo LDFLAGS: -lgoerror
+// #include <ErrorWrapper.h>
 import "C"
 
 type CError interface {
