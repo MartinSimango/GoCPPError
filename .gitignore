@@ -2,8 +2,8 @@
 
 *.o
 *.a
-*.so
 
+obj
 *.txt
 
 .DS_STORE

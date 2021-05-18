@@ -1,6 +1,6 @@
 CC=gcc
 CPP=g++
-IDIR=include ../Error/include
+IDIR=include
 ODIR=obj
 LDIR=lib
 SDIR=src
