@@ -41,7 +41,7 @@ class Error<void, Object, Args...> : public Delegate<void, Args...>, public Erro
             try {
                 (object->*memberFunctionPtr)(std::forward<Args>(args)...);
             }  
-            catch(error::Exception *e){
+            catch(error::ErrorException *e){
                 errorMessage = new char[ERROR_MAX_LENGTH];
                 e->getErrorMessage(errorMessage);
                 delete e;

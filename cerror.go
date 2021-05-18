@@ -23,14 +23,18 @@ type CErrorImpl struct {
 //check the CError is implemented
 var _ CError = &CErrorImpl{}
 
+//Error returns the error message
 func (ce CErrorImpl) Error() string {
 	return *ce.GetErrorMessage()
 }
 
+//Free frees the memory allocated to ce.Ptr. This method will soon be removed once smart pointers are used within C++
+// Error library
 func (ce CErrorImpl) Free() {
 	C.DestroyError(ce.Ptr)
 }
 
+//GetErrorMessage returns a pointer to the error message
 func (ce CErrorImpl) GetErrorMessage() *string {
 	errorMessage := C.GetErrorMessage(ce.Ptr)
 	if errorMessage == nil {

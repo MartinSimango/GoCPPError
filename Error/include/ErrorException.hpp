@@ -2,13 +2,14 @@
 #include <iostream>
 #include <exception>
 
+
 namespace error
  {
 
-    class Exception : public std::exception {
+    class ErrorException : public std::exception {
         
         public:
-            Exception() : std::exception(){}
+            ErrorException() : std::exception(){}
             
             virtual char * getErrorMessage(char * error) = 0;
         

@@ -1,6 +1,6 @@
 CC=gcc
 CPP=g++
-IDIR=include ../Error/include ../Response/include
+IDIR=include ../Error/include
 ODIR=obj
 LDIR=lib
 SDIR=src
@@ -30,12 +30,9 @@ build-lib: $(ERROR_DLIB_SOURCES) $(ERROR_DEPS)
 	$(CPP) -shared -fPIC -o $(LDIR)/$(LIBNAME).so $(ERROR_DLIB_SOURCES) $(CFLAGS)
 	
 install:
-	rm -f /usr/local/lib/$(LIBNAME).so 
-	rm -f /usr/local/include/ErrorWrapper.h
-	rm -f /usr/local/include/ErrorConstants.h
+	rm -f /usr/local/lib/$(LIBNAME).so
 	cp $(LDIR)/$(LIBNAME).so /usr/local/lib
-	cp include/ErrorWrapper.h /usr/local/lib
-	cp include/ErrorConstants.h /usr/local/lib
+	cp include/* /usr/local/include
 
 clean:
 	rm -rf $(ODIR)

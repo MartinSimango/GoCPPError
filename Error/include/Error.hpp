@@ -6,7 +6,7 @@
 #include <iostream>
 #include <Delegate.hpp>
 #include <ErrorBase.hpp>
-#include <Exception.hpp>
+#include <ErrorException.hpp>
 #include <ResponseWrapper.h>
 
 //TODO add support for const functions
@@ -72,7 +72,7 @@ class Error: public Delegate<RetVal, Args...>, public ErrorBase {
             delete tempVal;
                 
          }
-         catch(error::Exception *e){
+         catch(error::ErrorException *e){
             errorMessage = new char[ERROR_MAX_LENGTH];
             e->getErrorMessage(errorMessage);
             retVal = tempVal;
