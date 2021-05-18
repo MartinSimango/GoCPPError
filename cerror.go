@@ -4,8 +4,7 @@ import (
 	"unsafe"
 )
 
-// #cgo LDFLAGS: -L${SRCDIR}/../../internal/Error/lib  -lgoerror
-// #cgo CFLAGS: -I${SRCDIR}/../../internal/Error/include
+// #cgo LDFLAGS: -lgoerror
 // #include <ErrorWrapper.h>
 import "C"
 
