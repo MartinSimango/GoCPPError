@@ -50,19 +50,19 @@ func (ce CErrorImpl) GetFuncReturnType() int {
 
 func (ce CErrorImpl) GetFuncReturnValue() interface{} {
 	switch ce.GetFuncReturnType() {
-	case int(C.INT_TYPE):
+	case INT_TYPE:
 		return int(C.GetFuncReturnValue_Int(ce.Ptr))
-	case int(C.BOOL_TYPE):
+	case BOOL_TYPE:
 		return bool(C.GetFuncReturnValue_Bool(ce.Ptr))
-	case int(C.STRING_TYPE):
+	case STRING_TYPE:
 		return C.GoString(C.GetFuncReturnValue_String(ce.Ptr))
-	case int(C.DOUBLE_TYPE):
+	case DOUBLE_TYPE:
 		return float64(C.GetFuncReturnValue_Double(ce.Ptr))
 	}
 	return nil
 }
 
-func (ce CErrorImpl) GetFuncReturnPtrValue(funcReturnType C.int) unsafe.Pointer {
-	return C.GetFuncReturnValue_Ptr(ce.Ptr, funcReturnType)
+func (ce CErrorImpl) GetFuncReturnPtrValue(funcReturnType int) unsafe.Pointer {
+	return C.GetFuncReturnValue_Ptr(ce.Ptr, C.int(funcReturnType))
 
 }
