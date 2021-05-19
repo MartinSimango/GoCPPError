@@ -13,7 +13,7 @@ type CError interface {
 	Free()
 	GetFuncReturnType() int
 	GetFuncReturnValue() interface{}
-	GetFuncReturnPtrValue(funcReturnType C.int) unsafe.Pointer
+	GetFuncReturnPtrValue(funcReturnType int) unsafe.Pointer
 }
 
 type CErrorImpl struct {
