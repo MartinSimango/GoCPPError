@@ -13,6 +13,7 @@ type CPPError interface {
 	GetFuncReturnType() int
 	GetFuncReturnValue() interface{}
 	GetFuncReturnStructValue(funcReturnType uint32) unsafe.Pointer
+	Free()
 }
 
 type CPPErrorImpl struct {
@@ -57,7 +58,13 @@ func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
 	return nil
 }
 
+//GetFuncReturnStructValue returns the value of the cppe's delgated function. The return type will be
+//the type that maps to the Struct with id CStructTypeId
 func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer {
 	return C.GetFuncReturnValue_Struct(cppe.Ptr, CStructTypeId)
+}
 
+//Free deallocated the memory allocated to cppe.Ptr.
+func (cppe CPPErrorImpl) Free() {
+	C.DestroyError(cppe.Ptr)
 }
