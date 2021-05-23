@@ -1,4 +1,4 @@
-package cerror
+package cpperror
 
 // #cgo LDFLAGS: -lgoerror
 // #include <ErrorWrapper.h>
