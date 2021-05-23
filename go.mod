@@ -1,3 +1,3 @@
-module github.com/MartinSimango/cpperror
+module github.com/MartinSimango/gocpperror
 
 go 1.16

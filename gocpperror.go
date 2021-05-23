@@ -1,4 +1,4 @@
-package cpperror
+package gocpperror
 
 import (
 	"unsafe"
@@ -10,10 +10,9 @@ import "C"
 
 type CPPError interface {
 	error
-	Free()
 	GetFuncReturnType() int
 	GetFuncReturnValue() interface{}
-	GetFuncReturnPtrValue(funcReturnType int) unsafe.Pointer
+	GetFuncReturnStructValue(funcReturnType uint32) unsafe.Pointer
 }
 
 type CPPErrorImpl struct {
@@ -26,12 +25,6 @@ var _ CPPError = &CPPErrorImpl{}
 //Error returns the error message
 func (cppe CPPErrorImpl) Error() string {
 	return *cppe.GetErrorMessage()
-}
-
-//Free frees the memory allocated to cppe.Ptr. This method will soon be removed once smart pointers are used within C++
-// Error library
-func (cppe CPPErrorImpl) Free() {
-	C.DestroyError(cppe.Ptr)
 }
 
 //GetErrorMessage returns a pointer to the error message
@@ -64,7 +57,7 @@ func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
 	return nil
 }
 
-func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId int) unsafe.Pointer {
-	return C.GetFuncReturnValue_Struct(cppe.Ptr, C.int(CStructTypeId))
+func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer {
+	return C.GetFuncReturnValue_Struct(cppe.Ptr, CStructTypeId)
 
 }
