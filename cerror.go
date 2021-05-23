@@ -44,10 +44,12 @@ func (ce CErrorImpl) GetErrorMessage() *string {
 	return &errorMessageString
 }
 
+//GetFuncReturnType returns the type id of the ce's delegated function
 func (ce CErrorImpl) GetFuncReturnType() int {
 	return int(C.GetFuncReturnType(ce.Ptr))
 }
 
+//GetFuncReturnValue returns the value of the ce's delegated function
 func (ce CErrorImpl) GetFuncReturnValue() interface{} {
 	switch ce.GetFuncReturnType() {
 	case INT_TYPE:
@@ -62,7 +64,7 @@ func (ce CErrorImpl) GetFuncReturnValue() interface{} {
 	return nil
 }
 
-func (ce CErrorImpl) GetFuncReturnPtrValue(funcReturnType int) unsafe.Pointer {
-	return C.GetFuncReturnValue_Ptr(ce.Ptr, C.int(funcReturnType))
+func (ce CErrorImpl) GetFuncReturnStructValue(CStructTypeId int) unsafe.Pointer {
+	return C.GetFuncReturnValue_Struct(ce.Ptr, C.int(CStructTypeId))
 
 }
