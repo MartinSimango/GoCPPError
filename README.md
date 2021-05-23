@@ -1,4 +1,4 @@
-# gocpperror
+# gocpperror (Still working on this readme, but enough is here to get started using the library)
 
 gocpprror is a go pacakge for easily handling C++ exceptions thrown in C++ classes that are dynamically linked to your Go application. <br />
 
@@ -31,7 +31,7 @@ class Foo {
 
   int div(int a, int b) {
     if (b < 0) {
-        throw new FooException("Cannot divide by 0");
+        throw new FooException("Cannot divide by 0"); //FooException has to extend the ErrorException class found in ErrorException.hpp
     }
     return a/b;
   }
@@ -44,6 +44,7 @@ We'd also need to wrapper a c++ class that implements our code in the C wrapper 
 For example the wrapper interface file would be called Foo.h and the implementation of the functions defined in this file will be in a class called FooWrapper.cpp.
 
 Examples of the two classes can be seen below.  <br />
+
 
 FooWrapper.h  <br />
 ```c
