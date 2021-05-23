@@ -1,4 +1,4 @@
-# gocpperror (Still working on this readme, but enough is here to get started using the library)
+# gocpperror (Still working on this readme, but enough is here to get started using the package)
 
 gocpprror is a go pacakge for easily handling C++ exceptions thrown in C++ classes that are dynamically linked to your Go application. <br />
 
