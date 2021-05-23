@@ -16,7 +16,7 @@ To install clone the repository at https://github.com/MartinSimango/cpperror
 
 The install command will copy the built library and the libary headers files into /usr/local/lib and /usr/local/include respectively.
 
-## Example
+## How to use
 
 
 Lets we say we had a c++ class Foo that we wanted to wanted to use in our go program. 
