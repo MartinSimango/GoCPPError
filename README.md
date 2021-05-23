@@ -118,7 +118,7 @@ func main() {
   foo := Foo{}
   foo.ptr = C.NewFoo()
   cerr := cpperror.CPPErrorImpl{}
-  cerr.Ptr = C.div(foo.ptr, C.int(a), C.int(b))  // (1) a and b be will integers
+  cerr.Ptr := C.div(foo.ptr, C.int(a), C.int(b))  // (1) a and b be will integers
   errorMessage := cerr.GetErrorMessage()
   if errorMessage != nil { // (2)
     fmt.Println(cerr) // (3) 
