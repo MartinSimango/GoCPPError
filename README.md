@@ -103,6 +103,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"unsafe"
 
 	cerror "github.com/MartinSimango/gocpperror"
 )
