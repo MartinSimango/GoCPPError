@@ -5,7 +5,7 @@ import (
 )
 
 // #cgo LDFLAGS: -lgoerror
-// #include <ErrorWrapper.h>
+// #include <cpperror/ErrorWrapper.h>
 import "C"
 
 type CPPError interface {

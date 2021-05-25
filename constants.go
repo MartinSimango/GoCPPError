@@ -1,7 +1,7 @@
 package gocpperror
 
 // #cgo LDFLAGS: -lgoerror
-// #include <ErrorWrapper.h>
+// #include <cpperror/ErrorWrapper.h>
 import "C"
 
 const INT_TYPE = int(C.INT_TYPE)
