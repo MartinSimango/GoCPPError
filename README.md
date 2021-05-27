@@ -71,7 +71,7 @@ FooWrapper.cpp  <br />
 //FooWrapper.cpp
 #include "Foo.hpp"
 #include "FooWrapper.h"
-#include <ErrorVoid.hpp> //imported from the https://github.com/MartinSimango/cpperror repo
+#include <cpperror/ErrorVoid.hpp> //imported from the https://github.com/MartinSimango/cpperror repo
 
 
 Foo * asFoo(void * foo) {
