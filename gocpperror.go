@@ -12,16 +12,23 @@ type CPPError interface {
 	error
 	GetFuncReturnType() int
 	GetFuncReturnValue() interface{}
-	GetFuncReturnStructValue(funcReturnType uint32) unsafe.Pointer
+	GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer
 	Free()
 }
 
 type CPPErrorImpl struct {
-	Ptr unsafe.Pointer
+	ptr unsafe.Pointer
 }
 
 //check the CPPError is implemented
 var _ CPPError = &CPPErrorImpl{}
+
+//NewCPPErrorImpl is a constructor
+func NewCPPErrorImpl(ptr unsafe.Pointer) *CPPErrorImpl {
+	return &CPPErrorImpl{
+		ptr: ptr,
+	}
+}
 
 //Error returns the error message
 func (cppe CPPErrorImpl) Error() string {
@@ -30,7 +37,7 @@ func (cppe CPPErrorImpl) Error() string {
 
 //GetErrorMessage returns a pointer to the error message
 func (cppe CPPErrorImpl) GetErrorMessage() *string {
-	errorMessage := C.GetErrorMessage(cppe.Ptr)
+	errorMessage := C.GetErrorMessage(cppe.ptr)
 	if errorMessage == nil {
 		return nil
 	}
@@ -40,20 +47,20 @@ func (cppe CPPErrorImpl) GetErrorMessage() *string {
 
 //GetFuncReturnType returns the type id of the cppe's delegated function
 func (cppe CPPErrorImpl) GetFuncReturnType() int {
-	return int(C.GetFuncReturnType(cppe.Ptr))
+	return int(C.GetFuncReturnType(cppe.ptr))
 }
 
 //GetFuncReturnValue returns the value of the cppe's delegated function
 func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
 	switch cppe.GetFuncReturnType() {
 	case INT_TYPE:
-		return int(C.GetFuncReturnValue_Int(cppe.Ptr))
+		return int(C.GetFuncReturnValue_Int(cppe.ptr))
 	case BOOL_TYPE:
-		return bool(C.GetFuncReturnValue_Bool(cppe.Ptr))
+		return bool(C.GetFuncReturnValue_Bool(cppe.ptr))
 	case STRING_TYPE:
-		return C.GoString(C.GetFuncReturnValue_String(cppe.Ptr))
+		return C.GoString(C.GetFuncReturnValue_String(cppe.ptr))
 	case DOUBLE_TYPE:
-		return float64(C.GetFuncReturnValue_Double(cppe.Ptr))
+		return float64(C.GetFuncReturnValue_Double(cppe.ptr))
 	}
 	return nil
 }
@@ -61,10 +68,10 @@ func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
 //GetFuncReturnStructValue returns the value of the cppe's delgated function. The return type will be
 //the type that maps to the Struct with id CStructTypeId
 func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer {
-	return C.GetFuncReturnValue_Struct(cppe.Ptr, CStructTypeId)
+	return C.GetFuncReturnValue_Struct(cppe.ptr, CStructTypeId)
 }
 
 //Free deallocated the memory allocated to cppe.Ptr.
 func (cppe CPPErrorImpl) Free() {
-	C.DestroyError(cppe.Ptr)
+	C.DestroyError(cppe.ptr)
 }
