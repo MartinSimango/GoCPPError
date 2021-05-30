@@ -72,6 +72,7 @@ func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.P
 }
 
 //Free deallocates the memory allocated to cppe.Ptr.
-func (cppe CPPErrorImpl) Free() {
+func (cppe *CPPErrorImpl) Free() {
 	C.DestroyError(cppe.ptr)
+	cppe.ptr = nil
 }
