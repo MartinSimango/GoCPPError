@@ -13,6 +13,7 @@ type CPPError interface {
 	GetFuncReturnType() int
 	GetFuncReturnValue() interface{}
 	GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer
+	GetErrorMessage() *string
 	Free()
 }
 
