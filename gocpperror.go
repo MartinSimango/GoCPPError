@@ -18,8 +18,7 @@ type CPPError interface {
 }
 
 type CPPErrorImpl struct {
-	ptr          unsafe.Pointer
-	errorMessage string
+	ptr unsafe.Pointer
 }
 
 //check the CPPError is implemented
@@ -28,8 +27,7 @@ var _ CPPError = &CPPErrorImpl{}
 //NewCPPErrorImpl is a constructor
 func NewCPPErrorImpl(ptr unsafe.Pointer) *CPPErrorImpl {
 	return &CPPErrorImpl{
-		ptr:          ptr,
-		errorMessage: "",
+		ptr: ptr,
 	}
 }
 
@@ -40,16 +38,12 @@ func (cppe *CPPErrorImpl) Error() string {
 
 //GetErrorMessage returns a pointer to the error message
 func (cppe *CPPErrorImpl) GetErrorMessage() *string {
-	if cppe.errorMessage != "" {
-		return &cppe.errorMessage
-	}
 
 	errorMessage := C.GetErrorMessage(cppe.ptr)
 	if errorMessage == nil {
 		return nil
 	}
 	errorMessageString := C.GoString(errorMessage)
-	cppe.errorMessage = errorMessageString
 	return &errorMessageString
 }
 
