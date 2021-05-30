@@ -17,7 +17,8 @@ type CPPError interface {
 }
 
 type CPPErrorImpl struct {
-	ptr unsafe.Pointer
+	ptr          unsafe.Pointer
+	errorMessage string
 }
 
 //check the CPPError is implemented
@@ -26,32 +27,38 @@ var _ CPPError = &CPPErrorImpl{}
 //NewCPPErrorImpl is a constructor
 func NewCPPErrorImpl(ptr unsafe.Pointer) *CPPErrorImpl {
 	return &CPPErrorImpl{
-		ptr: ptr,
+		ptr:          ptr,
+		errorMessage: "",
 	}
 }
 
 //Error returns the error message
-func (cppe CPPErrorImpl) Error() string {
+func (cppe *CPPErrorImpl) Error() string {
 	return *cppe.GetErrorMessage()
 }
 
 //GetErrorMessage returns a pointer to the error message
-func (cppe CPPErrorImpl) GetErrorMessage() *string {
+func (cppe *CPPErrorImpl) GetErrorMessage() *string {
+	if cppe.errorMessage != "" {
+		return &cppe.errorMessage
+	}
+
 	errorMessage := C.GetErrorMessage(cppe.ptr)
 	if errorMessage == nil {
 		return nil
 	}
 	errorMessageString := C.GoString(errorMessage)
+	cppe.errorMessage = errorMessageString
 	return &errorMessageString
 }
 
 //GetFuncReturnType returns the type id of the cppe's delegated function
-func (cppe CPPErrorImpl) GetFuncReturnType() int {
+func (cppe *CPPErrorImpl) GetFuncReturnType() int {
 	return int(C.GetFuncReturnType(cppe.ptr))
 }
 
 //GetFuncReturnValue returns the value of the cppe's delegated function
-func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
+func (cppe *CPPErrorImpl) GetFuncReturnValue() interface{} {
 	switch cppe.GetFuncReturnType() {
 	case INT_TYPE:
 		return int(C.GetFuncReturnValue_Int(cppe.ptr))
@@ -67,7 +74,7 @@ func (cppe CPPErrorImpl) GetFuncReturnValue() interface{} {
 
 //GetFuncReturnStructValue returns the value of the cppe's delgated function. The return type will be
 //the type that maps to the Struct with id CStructTypeId
-func (cppe CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer {
+func (cppe *CPPErrorImpl) GetFuncReturnStructValue(CStructTypeId uint32) unsafe.Pointer {
 	return C.GetFuncReturnValue_Struct(cppe.ptr, CStructTypeId)
 }
 
